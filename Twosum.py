@@ -1,13 +1,13 @@
-# class Solution:
-#     def twoSum(self, nums, target):
-#         for i in range(len(nums)):
-#             for j in range(i+1, len(nums)):
-#                 if nums[i] + nums[j] == target:
-#                     return [i,j]
-
-
 class Solution:
-    def twoSum(self, nums, target):
+    @staticmethod
+    def two_sum_1(nums, target):
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                if nums[i] + nums[j] == target:
+                    return [i, j]
+
+    @staticmethod
+    def two_sum_2(nums, target):
         addends = {}
         for i in range(len(nums)):
             addend = target - nums[i]
@@ -23,5 +23,7 @@ if __name__ == '__main__':
         if item.isdigit():
             num_list.append(int(item))
     target_num = int(input())
-    solution = Solution().twoSum(num_list, target_num)
-    print(solution)
+    # solution_1 = Solution().two_sum_1(num_list, target_num)
+    solution_2 = Solution().two_sum_2(num_list, target_num)
+    # print('O(n^2) solution: ', solution_1)
+    print('O(n) solution: ', solution_2)

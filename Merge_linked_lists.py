@@ -50,6 +50,7 @@ def mergeTwoLists(list1: ListNode, list2: ListNode) -> [ListNode]:
             compared = tmp
 
 
+
 n1 = ListNode(1)
 n2 = ListNode(2)
 n4 = ListNode(4)

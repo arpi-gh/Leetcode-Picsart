@@ -16,6 +16,8 @@ class Solution:
             addends[nums[i]] = i
 
 
+
+
 if __name__ == '__main__':
     inp = input('Enter a list of numbers: ')
     num_list = []

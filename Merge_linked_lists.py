@@ -8,46 +8,24 @@ class ListNode:
 
 
 def mergeTwoLists(list1: ListNode, list2: ListNode) -> [ListNode]:
-    dummy = ListNode()
+    dummy = ListNode(0)
     current = list1
     compared = list2
-    merged = []
-
-    if current is None:
-        return compared
-    elif compared is None:
-        return current
-    else:
-        if current.val <= compared.val:
-            dummy.next = current
+    pointer = dummy
+    while current:
+        if compared:
+            if current.val <= compared.val:
+                pointer.next = current
+            else:
+                pointer.next = compared
+                current, compared = compared, current
         else:
-            dummy.next = compared
-            current, compared = compared, current
-        merged.append(dummy.next)
-        # print(merged)
-
-    end = False
-    while not end:
-        if current.next is None:
-            if compared is not None:
-                current.next = compared
-                current = compared
-                merged.append(current)
-                while current.next is not None:
-                    current = current.next
-                end = True
-            # print(merged)
-            return dummy.next
-        if current.next.val <= compared.val:
-            current = current.next
-            merged.append(current)
-            # print(merged)
-        else:
-            tmp = current.next
-            current.next = compared
-            merged.append(compared)
-            current = compared
-            compared = tmp
+            pointer.next = current
+        current = current.next
+        pointer = pointer.next
+    if compared:
+        pointer.next = compared
+    return dummy.next
 
 
 
@@ -68,4 +46,4 @@ ls1 = n1
 ls2 = m1
 
 
-print(mergeTwoLists(ls1, ls2))
+print(mergeTwoLists(ListNode(0), ListNode(0)))

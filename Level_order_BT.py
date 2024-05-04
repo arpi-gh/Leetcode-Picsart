@@ -1,3 +1,4 @@
+import collections
 from typing import Optional
 
 
@@ -8,35 +9,53 @@ class TreeNode:
         self.right = right
 
 
+# class Solution:
+#     def __init__(self):
+#         self.tree = []
+#
+#     def getHeight(self, node) -> int:
+#         if not node:
+#             return 0
+#         left = self.getHeight(node.left)
+#         right = self.getHeight(node.right)
+#         return max(left, right) + 1
+#
+#     def dfs(self, node, height, cur_level):
+#         if not node:
+#             return
+#         if cur_level < height:
+#             if node.left:
+#                 self.tree[cur_level].append(node.left.val)
+#             if node.right:
+#                 self.tree[cur_level].append(node.right.val)
+#         self.dfs(node.left, height, cur_level=cur_level+1)
+#         self.dfs(node.right, height, cur_level=cur_level+1)
+#
+#     def levelOrder(self, root: Optional[TreeNode]) -> list[list[int]]:
+#         if root:
+#             h = self.getHeight(root)
+#             self.tree = [[] for _ in range(h)]
+#             self.tree[0].append(root.val)
+#             self.dfs(root, height=h, cur_level=1)
+#         return self.tree
+
 class Solution:
-    def __init__(self):
-        self.tree = []
-
-    def getHeight(self, node) -> int:
-        if not node:
-            return 0
-        left = self.getHeight(node.left)
-        right = self.getHeight(node.right)
-        return max(left, right) + 1
-
-    def dfs(self, node, height, cur_level):
-        if not node:
-            return
-        if cur_level < height:
-            if node.left:
-                self.tree[cur_level].append(node.left.val)
-            if node.right:
-                self.tree[cur_level].append(node.right.val)
-        self.dfs(node.left, height, cur_level=cur_level+1)
-        self.dfs(node.right, height, cur_level=cur_level+1)
-
     def levelOrder(self, root: Optional[TreeNode]) -> list[list[int]]:
-        if root:
-            h = self.getHeight(root)
-            self.tree = [[] for _ in range(h)]
-            self.tree[0].append(root.val)
-            self.dfs(root, height=h, cur_level=1)
-        return self.tree
+        res = []
+        queue = collections.deque()
+        queue.append(root)
+        while queue:
+            qlen = len(queue)
+            level = []
+            for i in range(qlen):
+                root = queue.popleft()
+                if root:
+                    level.append(root.val)
+                    queue.append(root.left)
+                    queue.append(root.right)
+            if level:
+                res.append(level)
+        return res
 
 
 node1 = TreeNode(3)

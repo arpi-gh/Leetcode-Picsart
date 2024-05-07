@@ -7,61 +7,50 @@ class TreeNode:
         self.left = left
         self.right = right
 
-
 # class Solution:
 #     def __init__(self):
-#         self.x = 1
+#         self.nums = []
 #
-#     def dfs(self, node) -> int:
+#     def extract(self, node, cur_num=''):
 #         if node is None:
-#             return 0
+#             return
 #
-#         left = self.dfs(node.left)
-#         right = self.dfs(node.right)
+#         cur_num += str(node.val)
+#         if not node.left and not node.right:
+#             self.nums.append(int(cur_num))
 #
-#         if node.left is None and node.right is None:
-#             self.x = 1
-#         else:
-#             self.x += 1
+#         self.extract(node.left, cur_num)
+#         self.extract(node.right, cur_num)
 #
-#         return (node.val * 10 ** self.x) + left + right
+#         cur_num = cur_num[:-1]
+#
+#         return
 #
 #     def sumNumbers(self, node: Optional[TreeNode]) -> int:
-#         dummy = TreeNode(0)  # 0
-#         dummy.left = TreeNode(node.val)  # 0 -> 4
-#         dummy.right = TreeNode(node.val)  # 0 -> 4
-#         dummy.left.left = node.left  # 0 -> 4 -> 9 -> 5 / 0 -> 4 -> 9-> 1
-#         node.left = None
-#         dummy.right.right = node.right  # 0 -> 4 -> 0
-#
-#         return self.dfs(dummy)
-
+#         res = 0
+#         self.extract(node)
+#         for num in self.nums:
+#             res += num
+#         return res
 
 class Solution:
     def __init__(self):
-        self.nums = []
-
-    def extract(self, node, cur_num=''):
-        if node is None:
+        self.sum = 0
+    def sumNumbers(self, node: Optional[TreeNode], num=0) -> int:
+        if not node:
             return
 
-        cur_num += str(node.val)
+        num = num * 10 + node.val
+
         if not node.left and not node.right:
-            self.nums.append(int(cur_num))
+            self.sum += num
+            num //= 10
 
-        self.extract(node.left, cur_num)
-        self.extract(node.right, cur_num)
+        self.sumNumbers(node.left, num)
+        self.sumNumbers(node.right, num)
 
-        cur_num = cur_num[:-1]
+        return self.sum
 
-        return
-
-    def sumNumbers(self, node: Optional[TreeNode]) -> int:
-        res = 0
-        self.extract(node)
-        for num in self.nums:
-            res += num
-        return res
 
 node4 = TreeNode(4)
 node9 = TreeNode(9)

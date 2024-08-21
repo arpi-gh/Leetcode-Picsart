@@ -28,6 +28,27 @@ def mergeTwoLists(list1: ListNode, list2: ListNode) -> [ListNode]:
     return dummy.next
 
 
+class Solution(object):
+    def mergeTwoLists(self, list1, list2):
+        head = ListNode(0)
+        pointer = head
+        cur = list1
+        other = list2
+
+        while cur:
+            if other and other.val < cur.val:
+                cur, other = other, cur
+            pointer.next = cur
+            cur = cur.next
+            pointer = pointer.next
+
+        while other:
+            pointer.next = other
+            other = other.next
+            pointer = pointer.next
+
+        return head.next
+
 
 n1 = ListNode(1)
 n2 = ListNode(2)

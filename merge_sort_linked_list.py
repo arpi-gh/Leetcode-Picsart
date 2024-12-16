@@ -6,48 +6,107 @@ class ListNode:
     def __repr__(self):
         return f'{self.val}'
 
+# Past Solution
+# class Solution:
+#     def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+#         if head.next is None:
+#             return head
+#         elif head.next.next is None:
+#             head_left = head
+#             head_right = head.next
+#             head.next = None
+#         else:
+#             slow = fast = head
+#             while fast.next and fast.next.next:
+#                 slow = slow.next
+#                 fast = fast.next.next
+#             head_left = head
+#             head_right = slow.next
+#             slow.next = None
+#
+#         left = Solution.sortList(self, head_left)
+#         right = Solution.sortList(self, head_right)
+#
+#         return Solution.merge(self, left, right)
+#
+#     def merge(self, head1, head2):
+#         dummy = ListNode(0)
+#         current = head1
+#         compared = head2
+#         pointer = dummy
+#         while current:
+#             if compared:
+#                 if current.val <= compared.val:
+#                     pointer.next = current
+#                 else:
+#                     pointer.next = compared
+#                     current, compared = compared, current
+#             else:
+#                 pointer.next = current
+#             current = current.next
+#             pointer = pointer.next
+#         if compared:
+#             pointer.next = compared
+#         return dummy.next
+
+# New Solution
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
 
 class Solution:
-    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if head.next is None:
-            return head
-        elif head.next.next is None:
-            head_left = head
-            head_right = head.next
-            head.next = None
-        else:
-            slow = fast = head
-            while fast.next and fast.next.next:
-                slow = slow.next
-                fast = fast.next.next
-            head_left = head
-            head_right = slow.next
-            slow.next = None
-
-        left = Solution.sortList(self, head_left)
-        right = Solution.sortList(self, head_right)
-
-        return Solution.merge(self, left, right)
-
-    def merge(self, head1, head2):
-        dummy = ListNode(0)
-        current = head1
-        compared = head2
-        pointer = dummy
-        while current:
-            if compared:
-                if current.val <= compared.val:
-                    pointer.next = current
-                else:
-                    pointer.next = compared
-                    current, compared = compared, current
+    def merge(self, left, right):
+        res = current = ListNode(0)
+        while left and right:
+            if left.val <= right.val:
+                current.next = left
+                left = left.next
             else:
-                pointer.next = current
+                current.next = right
+                right = right.next
             current = current.next
-            pointer = pointer.next
-        if compared:
-            pointer.next = compared
-        return dummy.next
+
+        while left:
+            current.next = left
+            left = left.next
+            current = current.next
+
+        while right:
+            current.next = right
+            right = right.next
+            current = current.next
+
+        current.next = None
+        return res.next
+
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return
+        elif not head.next:
+            return head
+
+        slow = head
+        fast = head.next
+
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        if fast.next:
+            fast = fast.next
+            slow = slow.next
+
+        head2 = slow.next
+        slow.next = None
+
+        head1 = self.sortList(head)
+        head2 = self.sortList(head2)
+
+        return self.merge(head1, head2)
+
 
 
 # n1 = ListNode(1)

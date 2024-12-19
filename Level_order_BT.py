@@ -8,6 +8,9 @@ class TreeNode:
         self.left = left
         self.right = right
 
+    def __repr__(self):
+        return f'{self.val}'
+
 
 # class Solution:
 #     def __init__(self):
@@ -39,34 +42,63 @@ class TreeNode:
 #             self.dfs(root, height=h, cur_level=1)
 #         return self.tree
 
+
+# previous solution
+# class Solution:
+#     def levelOrder(self, root: Optional[TreeNode]) -> list[list[int]]:
+#         res = []
+#         queue = collections.deque()
+#         queue.append(root)
+#         while queue:
+#             qlen = len(queue)
+#             level = []
+#             for i in range(qlen):
+#                 root = queue.popleft()
+#                 if root:
+#                     level.append(root.val)
+#                     queue.append(root.left)
+#                     queue.append(root.right)
+#             if level:
+#                 res.append(level)
+#         return res
+
+
+# new solution
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> list[list[int]]:
-        res = []
-        queue = collections.deque()
-        queue.append(root)
-        while queue:
-            qlen = len(queue)
+        q = [root]
+        tree = []
+        while q:
             level = []
-            for i in range(qlen):
-                root = queue.popleft()
-                if root:
-                    level.append(root.val)
-                    queue.append(root.left)
-                    queue.append(root.right)
+            for i in range(len(q)):
+                node = q.pop(0)
+                if node:
+                    level.append(node.val)
+                    q.append(node.left)
+                    q.append(node.right)
             if level:
-                res.append(level)
-        return res
+                tree.append(level)
+
+        return tree
 
 
-node1 = TreeNode(3)
-node2 = TreeNode(9)
-node3 = TreeNode(20)
-node4 = TreeNode(15)
-node5 = TreeNode(7)
+if __name__ == '__main__':
+    node1 = TreeNode(3)
+    node2 = TreeNode(9)
+    node3 = TreeNode(20)
+    node4 = TreeNode(15)
+    node5 = TreeNode(7)
 
-node1.left = node2
-node1.right = node3
-node3.left = node4
-node3.right = node5
+    node1.left = node2
+    node1.right = node3
+    node3.left = node4
+    node3.right = node5
 
-print(Solution().levelOrder(node1))
+    print(Solution().levelOrder(node1))

@@ -34,6 +34,7 @@ class Solution:
 
         dfs(root)
 
+
 if __name__ == '__main__':
     t1 = TreeNode(1)
     t2 = TreeNode(2)
@@ -47,5 +48,3 @@ if __name__ == '__main__':
     t10 = TreeNode(10)
     t11 = TreeNode(11)
     t12 = TreeNode(12)
-
-    t1.left =

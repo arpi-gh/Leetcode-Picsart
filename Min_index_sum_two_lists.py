@@ -15,4 +15,4 @@ class Solution:
                     min_sum = index_sum
                 elif index_sum == min_sum:
                     res.append(list2[i])
-        return res
+        return res 

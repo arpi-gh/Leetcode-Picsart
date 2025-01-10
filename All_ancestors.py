@@ -1,3 +1,5 @@
+
+
 class Solution(object):
     def getAncestors(self, n, edges):
         outgoing = [[] for node in range(n)]
@@ -18,10 +20,8 @@ class Solution(object):
                 q.append(neighbor)
                 res[neighbor].update(res[current])
                 res[neighbor].add(current)
-        for i in range(len(res)):
-            res[i] = sorted(list(res[i]))
 
-        return res
+        return [sorted(list(elem)) for elem in res]
 
 
 if __name__ == '__main__':
